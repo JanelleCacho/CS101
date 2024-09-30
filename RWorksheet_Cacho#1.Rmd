@@ -1,0 +1,223 @@
+<<<<<<< HEAD
+#1
+age <- c(34, 28, 22, 36, 27, 18, 52, 39, 42, 29, 35, 31, 27, 22, 37, 34, 19, 20, 57, 49, 50, 37, 46, 25, 17, 37, 42, 53, 41, 51, 35, 24, 33, 41)
+length(age)
+
+#2
+reciprocal_age <- 1 / age
+reciprocal_age
+
+#3
+new_age <- c(age, 0, age)
+new_age
+
+#4
+sorted_age <- sort(age)
+sorted_age
+
+#5
+min_age <- min(age)
+min_age
+max_age <- max(age)
+max_age
+
+#6
+data <- c(2.4, 2.8, 2.1, 2.5, 2.4, 2.2, 2.5, 2.3, 2.5, 2.3, 2.4, 2.7)
+length_data <- length(data)
+length_data
+
+#7
+doubled_data <- data * 2
+doubled_data  
+
+#8.1
+seq_1_to_100 <- seq(1, 100)
+seq_1_to_100
+
+#8.2
+seq_20_to_60 <- seq(20, 60)
+seq_20_to_60
+
+
+seq_51_to_91 <- seq(51, 91)
+seq_51_to_91
+
+#8.3
+mean_20_to_60 <- mean(seq_20_to_60)
+mean_20_to_60
+
+#8.4
+sum_51_to_91 <- sum(seq_51_to_91)
+sum_51_to_91
+
+#8.5
+seq_1_to_1000 <- seq(1, 1000)
+seq_1_to_1000
+
+#8.5a,b
+length_seq_1_to_100 <- length(seq_1_to_100)
+length_seq_20_to_60 <- length(seq_20_to_60)
+length_mean_20_to_60 <- 1  
+length_sum_51_to_91 <- 1  
+total_data_points <- length_seq_1_to_100 + length_seq_20_to_60 + length_mean_20_to_60 + length_sum_51_to_91
+total_data_points
+
+#8.5c
+max_until_10 <- max(seq_1_to_1000[seq_1_to_1000 <= 10])
+max_until_10
+
+#9
+filtered_numbers <- Filter(function(i) {all(i %% c(3, 5, 7) !=0) }, seq(1, 100))
+filtered_numbers
+
+#10
+backward_seq <- seq(100, 1)
+print(backward_seq)
+
+#11,a,b
+multiples_3_or_5 <- Filter(function(i) { i %% 3== 0 || i %% 5 == 0 }, seq(1, 24))
+multiples_3_or_5
+
+length_multiples <- length(multiples_3_or_5)
+print(length_multiples)
+
+#12
+x <- {0 + x + 5 + }
+
+#13
+score <- c(72, 86, 92, 63, 88, 89, 91, 92, 75, 75, 77)
+
+# Find x[2] and x[3]
+score[2] 
+score[3] 
+
+#14
+a <- c(1, 2, NA, 6, 7)
+# Change the NA to 999
+a[is.na(a)] <- 999
+a
+
+#15
+name <- readline(prompt="Input your name: ")
+
+age <- readline(prompt="Input your age: ")
+
+print(paste("My name is", name, "and I am", age, "years old."))
+
+print(R.version.string)  # Output the R version
+
+
+
+
+=======
+#1
+age <- c(34, 28, 22, 36, 27, 18, 52, 39, 42, 29, 35, 31, 27, 22, 37, 34, 19, 20, 57, 49, 50, 37, 46, 25, 17, 37, 42, 53, 41, 51, 35, 24, 33, 41)
+length(age)
+
+#2
+reciprocal_age <- 1 / age
+reciprocal_age
+
+#3
+new_age <- c(age, 0, age)
+new_age
+
+#4
+sorted_age <- sort(age)
+sorted_age
+
+#5
+min_age <- min(age)
+min_age
+max_age <- max(age)
+max_age
+
+#6
+data <- c(2.4, 2.8, 2.1, 2.5, 2.4, 2.2, 2.5, 2.3, 2.5, 2.3, 2.4, 2.7)
+length_data <- length(data)
+length_data
+
+#7
+doubled_data <- data * 2
+doubled_data  
+
+#8.1
+seq_1_to_100 <- seq(1, 100)
+seq_1_to_100
+
+#8.2
+seq_20_to_60 <- seq(20, 60)
+seq_20_to_60
+
+
+seq_51_to_91 <- seq(51, 91)
+seq_51_to_91
+
+#8.3
+mean_20_to_60 <- mean(seq_20_to_60)
+mean_20_to_60
+
+#8.4
+sum_51_to_91 <- sum(seq_51_to_91)
+sum_51_to_91
+
+#8.5
+seq_1_to_1000 <- seq(1, 1000)
+seq_1_to_1000
+
+#8.5a,b
+length_seq_1_to_100 <- length(seq_1_to_100)
+length_seq_20_to_60 <- length(seq_20_to_60)
+length_mean_20_to_60 <- 1  
+length_sum_51_to_91 <- 1  
+total_data_points <- length_seq_1_to_100 + length_seq_20_to_60 + length_mean_20_to_60 + length_sum_51_to_91
+total_data_points
+
+#8.5c
+max_until_10 <- max(seq_1_to_1000[seq_1_to_1000 <= 10])
+max_until_10
+
+#9
+filtered_numbers <- Filter(function(i) {all(i %% c(3, 5, 7) !=0) }, seq(1, 100))
+filtered_numbers
+
+#10
+backward_seq <- seq(100, 1)
+print(backward_seq)
+
+#11,a,b
+multiples_3_or_5 <- Filter(function(i) { i %% 3== 0 || i %% 5 == 0 }, seq(1, 24))
+multiples_3_or_5
+
+length_multiples <- length(multiples_3_or_5)
+print(length_multiples)
+
+#12
+x <- {0 + x + 5 + }
+
+#13
+score <- c(72, 86, 92, 63, 88, 89, 91, 92, 75, 75, 77)
+
+# Find x[2] and x[3]
+score[2] 
+score[3] 
+
+#14
+a <- c(1, 2, NA, 6, 7)
+# Change the NA to 999
+a[is.na(a)] <- 999
+a
+
+#15
+name <- readline(prompt="Input your name: ")
+
+age <- readline(prompt="Input your age: ")
+
+print(paste("My name is", name, "and I am", age, "years old."))
+
+print(R.version.string)  # Output the R version
+
+
+
+
+>>>>>>> d68116e129212cb8ef928dc31c143fd2901c6dc3
