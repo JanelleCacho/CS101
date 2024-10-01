@@ -1,8 +1,11 @@
 ---
 title: "Worksheet3a"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
+```{r}
 LETTERS
 letters
 
@@ -54,6 +57,10 @@ city_highest_temp
 
 city_lowest_temp <- city_temp_df[which.min(city_temp_df$Temperature),]
 city_lowest_temp
+```
+
+
+```{r}
 
 # Using Matrices
 matrix(c(5, 6, 7, 4, 3, 2, 1, 2, 3, 7, 8, 9), nrow = 2)
@@ -67,7 +74,7 @@ matrix_4x3 <- matrix(value, nrow = 3, ncol = 4)
 matrix_4x3
 
 # 2b
-matrix_multiplied <- matrix_4x3
+matrix_multiplied <- matrix_4x3 * 2
 matrix_multiplied
 
 # 2c
@@ -94,14 +101,16 @@ matrix_multiplied
 # 2h
 dim(matrix_4x3) <- c(6, 2)
 matrix_4x3
+```
 
+```{r}
 # Using Array
 array_dta <- array(c(1:24), c(3, 4, 4))
 array_dta
 
 dim(array_dta)
 
-length(array-dta)
+length(array_dta)
 
 # 2
 vectorA <- c(1:24)
@@ -122,3 +131,6 @@ dim(array_data)
 dimnames(array_data) <- list(c("a", "b"), c("A", "B", "C", "D"), c("1st-Dimemsional Array", "2nd-Dimensional Array",  "3rd-Dimensional Array"))
 
 array_data
+
+```
+
