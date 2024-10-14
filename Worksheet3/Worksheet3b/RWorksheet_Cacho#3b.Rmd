@@ -1,0 +1,122 @@
+---
+title: "RWorksheet_Cacho#3b"
+author: "Janelle Cacho"
+date: "2024-10-09"
+output: pdf_document
+---
+
+```{r}
+#1a
+
+respondents_data <- data.frame(
+Respondents = 1:20,
+
+Sex = c(2, 2, 1, 2, 1, 2, 1,2, 1, 2, 1, 1, 2, 2, 1, 1, 2, 1, 2, 1),
+
+Fathers_Occupation = c(1, 3, 1, 3, 3, 1, 3, 2, 3, 1, 2, 1, 3, 1, 3, 1, 3, 1, 3, 1),
+
+Person_at_Home = c(5, 7, 3, 8, 9, 6, 9, 6, 4, 3, 4, 5, 7, 8, 3, 7, 11, 7, 6, 6),
+
+Siblings_at_School = c(6, 4, 4, 1, 1, 3, 3, 5, 3, 2, 4, 2, 3,  4, 3, 3, 5, 3, 2, 2),
+
+Types_of_Houses = c(1, 2, 1, 1, 3, 3, 3, 2, 1, 3, 1, 2, 1, 3, 1, 3, 1, 3, 2, 2)
+)
+respondents_data
+
+#1b
+#The data contains information from 20 individuals regarding their families and residences. The majority of respondents are female, and their fathers are employed as farmers, drivers, or in various other occupations, with many falling into the "other" category. The number of residents in each household varies from 3 to 11, and most respondents report having 2 to 5 siblings currently in school. Their homes are primarily constructed of wood, semi-concrete, or concrete, with most living in concrete or semi-concrete structures. Overall, the data provides a clear overview of family size, housing types, and the occupations of their fathers.
+
+str(respondents_data)
+summary(respondents_data)
+
+#1c
+#no, the mean of the number of siblings is 3.15
+mean_siblings <- mean(respondents_data$Siblings_at_School)
+mean_siblings == 5
+mean_siblings
+
+#1d
+subset_data <- respondents_data[1:2,]
+subset_data
+
+#1e
+subset_data2 <- respondents_data[c(3, 5), c(2, 4)]
+subset_data2
+
+#1f
+types_houses <- respondents_data$Types_of_Houses
+types_houses
+
+#1g
+male_farmers <- subset(respondents_data, Sex == 1 & Fathers_Occupation == 1)
+male_farmers
+
+#1h
+femalesibs <- subset(respondents_data, Sex == 2 & Siblings_at_School >= 5)
+femalesibs
+```
+```{r}
+#2
+df = data.frame(Ints=integer(), 
+                Doubles=double(), 
+                Characters=character(), 
+                Logicals=logical(), 
+                Factors=factor(), 
+                stringsAsFactors=FALSE)
+print("Structure of the empty dataframe:")
+print(str(df))
+
+#It is an empty data frame with 5 columns designated for integers, decimals, text, and boolean values (true or false). It currently has no rows or data, and the category column does not have any defined options. This serves merely as the structure of a data frame without any actual data included.
+```
+
+
+```{r}
+#3
+
+household_data <- data.frame(
+  Respondents = 1:10,
+  Sex = c("Male", "Female", "Female", "Male", "Male", 
+          "Female", "Female", "Male", "Female", "Male"),
+  
+  Fathers_Occupation = c("Farmer", "Farmer", "Farmer", "Farmer", "Driver", "Driver", "Driver", "Driver", "Others", "Others"),
+  
+  Persons_at_Home = c(5, 7, 3, 8, 1, 2, 4, 3, 1, 6),
+  
+  Siblings_at_School = c(5, 7, 3, 8, 1, 4, 2, 6, 11, 6),
+  
+  Types_of_Houses = c("Wood", "Concrete", "Concrete", "Wood", "Semi-concrete", "Semi-concrete", "Concrete", "Wood", "Semi-concrete", "Concrete")
+)
+household_data
+
+#3a
+write.csv(household_data, "HouseholdData.csv", row.names = FALSE)
+library(readr)
+household_data <- read.csv("HouseHoldData.csv")
+household_data
+
+#3b
+household_data$Sex <- factor(household_data$Sex, levels = c("Male", "Female"), labels = c(1,2))
+household_data$Sex
+
+#3c
+household_data$Type_of_Houses <- factor(household_data$Types_of_Houses, levels = c("Wood", "Concrete", "Semi-concrete"), labels = c(1, 2, 3))
+household_data$Types_of_Houses
+
+#3d
+household_data$Fathers_Occupation <- factor(household_data$Fathers_Occupation, levels = c(1, 2, 3), labels = c("Farmer", "Driver", "Others"))
+household_data$Fathers_Occupation
+
+#3e
+female_driver <- subset(household_data, Sex == 2 & Fathers_Occupation == "Driver")
+female_driver
+
+#3f
+siblings_5_or_more <- subset(household_data, Siblings_at_School >= 5)
+siblings_5_or_more
+```
+
+```{r}
+#4
+#The graph illustrates the sentiments expressed in tweets: negative sentiments are represented in red, neutral in orange, and positive in blue. On certain days, such as July 15 and 21, there were a significant number of negative tweets, while other days showed a prevalence of positive or neutral sentiments. This indicates that people’s opinions were varied and shifted in response to events occurring that week, reflecting their tweets.
+```
+
