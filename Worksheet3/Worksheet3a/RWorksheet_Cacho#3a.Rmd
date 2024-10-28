@@ -1,0 +1,136 @@
+---
+title: "Worksheet3a"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+LETTERS
+letters
+
+# 1a
+first_11_letters <- LETTERS[1:11]
+first_11_letters
+
+# 1b
+odd_letters <- LETTERS[seq(1, length(LETTERS), by = 2)]
+odd_letters
+
+# 1c
+vowels <- LETTERS[c(1, 5, 9, 15, 21)]
+vowels
+
+# 1d
+last_5_lowercase <- letters[22:26]
+last_5_lowercase
+
+# 1e
+letters_15_to_24 <- letters[15:24]
+letters_15_to_24
+
+# 2a
+city <- c("Tuguegarao City", "Manila", "Iloilo City", "Tacloban", "Samal Island", "Davao City")
+city
+
+# 2b
+temp <- c(42,39, 34, 34, 30, 27)
+temp
+
+# 2c
+city_temp_df <- data.frame(city, temp)
+city_temp_df
+
+# 2d
+names(city_temp_df) <- c("City", "Temperature")
+city_temp_df
+
+# 2e
+str(city_temp_df)
+
+# 2f
+city_temp_df[3:4,]
+
+# 2g
+city_highest_temp <- city_temp_df[which.max(city_temp_df$Temperature),]
+city_highest_temp
+
+city_lowest_temp <- city_temp_df[which.min(city_temp_df$Temperature),]
+city_lowest_temp
+```
+
+
+```{r}
+
+# Using Matrices
+matrix(c(5, 6, 7, 4, 3, 2, 1, 2, 3, 7, 8, 9), nrow = 2)
+matrix(data = c(3, 4, 5, 6, 7, 8), 3, 2)
+diag(1, nrow = 6, ncol = 5)
+diag(6)
+
+# 2a
+value <- c(1:8, 11:14)
+matrix_4x3 <- matrix(value, nrow = 3, ncol = 4)
+matrix_4x3
+
+# 2b
+matrix_multiplied <- matrix_4x3 * 2
+matrix_multiplied
+
+# 2c
+row2 <- matrix_4x3[2,]
+row2
+
+# 2d
+d_result <- matrix_4x3[1:2, 3:4]
+d_result
+
+# 2e
+e_result <-matrix_4x3[3, 2:3]
+e_result
+
+# 2f
+f_result <-matrix_4x3[,4]
+f_result
+
+# 2g
+rownames(matrix_multiplied) <- c("isa", "dalawa", "tatlo")
+colnames(matrix_multiplied) <- c("uno", "dos", "tres", "quatro")
+matrix_multiplied
+
+# 2h
+dim(matrix_4x3) <- c(6, 2)
+matrix_4x3
+```
+
+```{r}
+# Using Array
+array_dta <- array(c(1:24), c(3, 4, 4))
+array_dta
+
+dim(array_dta)
+
+length(array_dta)
+
+# 2
+vectorA <- c(1:24)
+
+an_Array <- array(vectorA, dim = c(3,4,2))
+an_Array
+
+# 3a
+values <- rep(c(1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1), times = 2)
+
+array_data <- array(vectorA, dim = c(2, 4, 3))
+array_data
+
+# 3b
+dim(array_data)
+
+# 3c 
+dimnames(array_data) <- list(c("a", "b"), c("A", "B", "C", "D"), c("1st-Dimemsional Array", "2nd-Dimensional Array",  "3rd-Dimensional Array"))
+
+array_data
+
+```
+
