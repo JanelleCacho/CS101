@@ -1,0 +1,197 @@
+---
+title: "RWorksheet_Cacho#4b"
+author: "Janelle Cacho"
+date: "2024-10-28"
+output: pdf_document
+---
+
+
+```{r}
+# 1
+matrix_result <- matrix(0, nrow = 5, ncol = 5)
+A <- c(1, 2, 3, 4, 5)
+for (i in 1:5) {
+  for (j in 1:5) {
+    matrix_result[i, j] <- abs(i - j)
+  }
+}
+
+matrix_result
+
+```
+
+
+```{r}
+# 2
+for (i in 1:5) {
+  cat(rep("* ", i), "\n")
+}
+```
+
+```{r}
+first <- as.integer(readline(prompt = "Enter the first number:"))
+cat(first, "")
+fibonacci <- c(first)
+repeat {
+  next_num <- sum(tail(fibonacci, 2))
+  if(next_num > 500) break
+  cat(next_num, "")
+  fibonacci <- c(fibonacci, next_num)
+}
+```
+```{r}
+# 4a
+data <- read.csv("~/sample_data.csv")
+head(data)
+
+# 4b
+femdata <- subset(data, Gender == "F")
+maledata <- subset(data, Gender == "M")
+cat("Female count:", nrow(femdata),"\n")
+cat("Male count:", nrow(maledata),"\n")
+
+# 4c 
+gender_count <- table(data$Gender)
+barplot(gender_count, main= "Gender Distribution", col = c("pink", "blue"), 
+        xlab="Gender", ylab="Count", legend=TRUE)
+```
+```{r}
+# 5
+expenses <- c(Food = 60, Electricity = 10, Savings = 5, Miscellaneous = 25)
+percent <- paste0(names(expenses),"(", round(100*expenses / sum(expenses), 1), "%)")
+pie(expenses, labels= percent, col = c("yellow", "green", "red", "blue"), main = "Monthly Family Expenses")
+```
+```{r}
+# 6a
+data(iris)
+str(iris)
+
+# 6b
+mean_values <- colMeans(iris[, c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")])
+mean_values
+
+# 6c
+species_counts <- table(iris$Species)
+pie(species_counts, main="Species Distribution", col=c("purple", "blue", "lightpink"), 
+    labels=names(species_counts))
+
+# 6d
+setosa <- subset(iris, Species == "setosa")
+versicolor <- subset(iris, Species == "versicolor")
+virginica <- subset(iris, Species == "virginica")
+cat("Last six rows of Setosa:\n")
+
+tail(setosa)
+
+cat("\nLast six rows of Versicolor:\n")
+tail(versicolor)
+cat("\nLast six rows of Virginica:\n")
+tail(virginica)
+
+# 6e
+iris$Species <- as.factor(iris$Species)
+plot(iris$Sepal.Length, iris$Sepal.Width,
+main = "Iris Dataset",
+sub = "Sepal Width and Length",
+xlab = "Sepal Length",
+ylab = "Sepal Width",
+col = c("yellow", "yellowgreen", "orange")[iris$Species],
+pch = c(16, 17, 18)[iris$Species])
+
+legend("topright", legend = levels(iris$Species),
+col = c("yellow", "yellowgreen", "orange"), pch = c(16, 17, 18))
+
+# 6f
+#In this plot, we can observe the classification of species based on sepal dimensions. Example, Setosa species might appear separated from Versicolor and Virginica based on sepal width and length. This visual difference indicates that these features can help classification between species.
+```
+
+```{r}
+# 7a
+library(readxl)  
+library(dplyr)  
+
+alexa_data <- read_excel("alexa_file.xlsx")  
+
+print(head(alexa_data))
+print(colnames(alexa_data))
+
+if ("Variant" %in% colnames(alexa_data)) { 
+    alexa_data$Variant <- gsub("^\\s+|\\s+$", "", alexa_data$Variant)  
+    alexa_data$Variant <- gsub("Black Dot", "BlackDot", alexa_data$Variant)
+    alexa_data$Variant <- gsub("Black Plus", "BlackPlus", alexa_data$Variant)
+    alexa_data$Variant <- gsub("Black Show", "BlackShow", alexa_data$Variant)
+    alexa_data$Variant <- gsub("Black Spot", "BlackSpot", alexa_data$Variant)
+    alexa_data$Variant <- gsub("White Dot", "WhiteDot", alexa_data$Variant)
+    alexa_data$Variant <- gsub("White Plus", "WhitePlus", alexa_data$Variant)
+    alexa_data$Variant <- gsub("White Show", "WhiteShow", alexa_data$Variant)
+    alexa_data$Variant <- gsub("White Spot", "WhiteSpot", alexa_data$Variant)
+
+    print(head(alexa_data))
+} else {
+    stop("The specified column 'Variant' does not exist in the dataframe.")
+}
+```
+
+```{r}
+#7.b
+if ("Variant" %in% colnames(alexa_data)) {
+alexa_data$Variant <- gsub("^\\s+|\\s+$", "", alexa_data$Variant)
+variations_count <- alexa_data %>%
+count(Variant)
+print(variations_count)
+
+save(variations_count, file = "variations.RData")
+} else {
+stop("The specified column 'variant' does not exist in the dataframe.")
+}
+```
+
+```{r}
+#7.c
+library(ggplot2)
+
+load("variations.RData")
+
+ggplot(variations_count, aes(x = Variant, y = n, fill = Variant)) +
+geom_bar(stat = "identity") +
+labs(title = "Count of Variations",
+x = "Variants",
+y = "Count") +
+theme_minimal() +
+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+scale_fill_brewer(palette = "Set3")
+```
+
+```{r}
+#7.d
+library(gapminder) 
+library(dplyr)     
+library(ggplot2)   
+
+
+load("variations.RData") 
+
+black_Variations <- variations_count %>%
+    filter(grepl("Black", Variant)) %>%
+    summarise(n = sum(n)) %>%
+    mutate(color = "Black")  
+
+white_Variations <- variations_count %>%
+    filter(grepl("White", Variant)) %>%
+    summarise(n = sum(n)) %>%
+    mutate(color = "White") 
+
+combined_variations <- rbind(black_Variations, white_Variations)
+
+ggplot(combined_variations, aes(x = color, y = n, fill = color)) +
+    geom_bar(stat = "identity", position = "dodge") +  
+    labs(title = "Count of Black and White Variations", 
+         x = "Variants", 
+         y = "Count") +
+    theme_minimal() + 
+    scale_fill_manual(values = c("Black" = "black", "White" = "white")) + 
+    theme(axis.text.x = element_text(angle = 0, hjust = 0.5))
+}
+```
+
+

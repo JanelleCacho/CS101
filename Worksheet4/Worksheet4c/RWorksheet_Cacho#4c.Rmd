@@ -1,0 +1,278 @@
+---
+title: "RWorksheet_Cacho#4c"
+author: "Janelle Cacho"
+date: "2024-11-07"
+output: pdf_document
+---
+
+```{r}
+# 1a
+library(readr)
+mpg <- read.table("mpg.csv", header = TRUE, sep = ",")
+str(mpg)
+
+# 1b
+#The categorical variables in the mpg dataset are manufacturer, model, trans, drv, fl, and class.
+
+
+# 1c
+#The continuous variables in the mpg dataset are displ, cty, and hwy.
+```
+
+```{r}
+# 2
+# Manufacturer that has most models
+manufacturer_model_count <- table(mpg$manufacturer)
+most_models <- names(which.max(manufacturer_model_count))
+most_models_count <- max(manufacturer_model_count)
+
+# Model that has most variations
+model_counts <- table(mpg$model)
+most_variations_model <- names(which.max(model_counts))
+most_variations_count <- max(model_counts)
+
+most_models
+most_models_count
+most_variations_model
+most_variations_count
+```
+
+```{r}
+# 2a
+manufacturers_unique_model <- aggregate(model ~ manufacturer, data = mpg, function(x) length(unique(x)))
+
+manufacturers_unique_model
+```
+
+```{r}
+# 2b
+barplot(manufacturers_unique_model$model,
+        names.arg = manufacturers_unique_model$manufacturer, 
+        main = "Number of Unique Models per Manufacturer", 
+        xlab = "Manufacturer", ylab = "Number of Unique Models")
+
+
+# Using ggplot2
+library(ggplot2)
+ggplot(manufacturers_unique_model, aes(x = reorder(manufacturer, -model), y = model)) +
+  geom_bar(stat = "identity", fill = "#025245", color = "white") +
+  labs(title = "Number of Unique Models per Manufacturer", x = "Manufacturer",
+       y = "Number of Unique Models") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+```{r}
+# 2a
+ggplot(mpg, aes(model, manufacturer)) + geom_point()
+
+```
+
+```{r}
+# 2b 
+library(dplyr)
+
+model_counts <- mpg %>%
+  group_by(manufacturer, model) %>%
+  summarise(count = n(), .groups = "drop")
+
+ggplot(model_counts, aes(x = model, y = manufacturer, size = count)) +
+  geom_point(color = "#003625", alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Number of Models by Manufacturer",
+       x = "Model",
+       y = "Manufacturer",
+       size = "Count") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+```{r}
+# 3 
+top_20_data <- mpg %>% slice_head(n = 20)
+
+ggplot(top_20_data, aes(x = model, y = year)) +
+  geom_point(color = "black", size = 3) +
+  theme_minimal() +
+  labs(title = "Top 20 Observations: Model vs. Year",
+       x = "Model",
+       y = "Year") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+```{r}
+# 4
+cars_per_model <- mpg %>%
+  group_by(model) %>%
+  summarise(count = n(), .groups = "drop")
+
+cars_per_model
+```
+
+```{r}
+# 4a
+top_20_models <- cars_per_model %>%
+  arrange(desc(count)) %>%
+  slice_head(n = 20)
+
+ggplot(top_20_models, aes(x = model, y = count, fill = model)) +
+  geom_bar(stat = "identity", color = "black") +
+  theme_minimal() +
+  labs(title = "Top 20 Car Models by Count",
+       x = "Model",
+       y = "Number of Cars") +
+theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 4), 
+      plot.margin = margin(1, 1, 1, 1, "cm"))+   scale_fill_viridis_d()  
+```
+
+```{r}
+# 4b
+ggplot(top_20_models, aes(x = model, y = count, fill = model)) +
+  geom_bar(stat = "identity", color = "black") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Top 20 Car Models by Count (Flipped)",
+       x = "Model",
+       y = "Number of Cars") +
+  scale_fill_viridis_d()  
+```
+
+```{r}
+# 5 
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+       x = "Number of Cylinders",
+       y = "Engine Displacement") +
+  scale_color_viridis_c() 
+```
+
+```{r}
+# 6
+library(ggplot2)
+
+ggplot(mpg, aes(x = displ, y = hwy, color = cty)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  labs(title = "Relationship between Engine Displacement and Highway MPG",
+       x = "Engine Displacement",
+       y = "Highway MPG",
+       color = "City MPG") +
+  scale_color_viridis_c()  # Adds a continuous color scale
+
+#The plot shows a negative relationship between engine displacement (displ) and highway miles per gallon (hwy. Indicating that as engine displacement increases, highway MPG tends to decrease. Larger engines generally consume more fuel, which leads to lower fuel efficiency. Vehicles with higher engine displacement typically have more or larger cylinders, requiring more fuel and resulting in lower MPG. Additionally, the efficiency of vehicles in both city and highway settings is related. Cars designed for fuel efficiency often perform better in both environments, which is why the color gradient for city miles per gallon (cty) aligns with trends observed in highway MPG and engine displacement.
+```
+
+
+```{r}
+# 6
+traffic_data <- read.csv("traffic.csv")
+
+#6 a
+num_obs <- nrow(traffic_data)
+num_var <- ncol(traffic_data)
+var_names <- names(traffic_data)
+
+cat("Number of observations:", num_obs, "\n")
+cat("Number of variables:", num_var, "\n")
+cat("Variables:", var_names, "\n")
+
+```
+
+```{r}
+# 6b
+junction_list <- split(traffic_data, traffic_data$Junction)
+
+for(junction in names(junction_list)) {
+  cat("Data for junction:", junction, "\n")
+  print(head(junction_list[[junction]]))
+  cat("\n")}
+```
+
+```{r}
+# 6c
+library(ggplot2)
+
+traffic_data$DateTime <- as.POSIXct(traffic_data$DateTime, format="%Y-%m-%d %H:%M:%S")
+
+ggplot(traffic_data, aes(x = DateTime, y = Vehicles, color = as.factor(Junction))) +
+  geom_line() +
+  facet_wrap(~ Junction) +
+  labs(title = "Traffic Counts by Junction", x = "Date and Time",
+       y = "Number of Vehicles") +
+  theme_minimal()
+```
+
+```{r}
+#7
+library(readxl)
+alexa_data <- read_excel("alexa_file.xlsx")
+
+# 7a 
+num_obs <- nrow(alexa_data)
+num_cols <- ncol(alexa_data)
+col_names <- names(alexa_data)
+
+cat("Number of observations:", num_obs, "\n")
+cat("Number of columns:", num_cols, "\n")
+cat("Column names:", col_names, "\n")
+```
+
+```{r}
+# 7b 
+library(dplyr)
+variation_totals <- alexa_data %>%
+  group_by(Variant) %>%
+  summarise(total = n())
+
+variation_totals
+```
+
+```{r}
+# 7c
+library(ggplot2)
+
+ggplot(variation_totals, aes(x = Variant, y = total, fill = Variant)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Total Count of Each Variant", x = "Variant", 
+       y = "Total Count") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 4),
+        plot.margin = margin(1, 1, 1, 1, "cm"))
+
+```
+
+```{r}
+# 7d
+alexa_data$date <- as.Date(alexa_data$date)
+
+ggplot(alexa_data, aes(x = date, y = feedback)) +
+  geom_line() +
+  labs(title = "Number of Verified Reviews Over Time", x = "Date", 
+       y = "Number of Verified Reviews") +
+  theme_minimal()
+```
+
+```{r}
+# 7e
+rating_by_variant <- alexa_data %>%
+  group_by(Variant) %>%
+  summarise(avg_rating = mean(rating, na.rm = TRUE))
+
+rating_by_variant 
+
+ggplot(rating_by_variant, aes(x = Variant, y = avg_rating, fill = Variant)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Average Rating by Variant", x = "Variant", y = "Average Rating") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 4), 
+        plot.margin = margin(1, 1, 1, 1, "cm"))
+```
+
+
+
+
+
+
+
+
